@@ -1,7 +1,11 @@
 # module.nix
-{ pkgs, ... }:
+{ config, pkgs, lib, modulesPath, ... }:
 
 {
+  imports = [
+    (modulesPath + "/virtualisation/digital-ocean-config.nix")
+  ];
+
   # Enable the Nginx web server
   services.nginx = {
     enable = true;
