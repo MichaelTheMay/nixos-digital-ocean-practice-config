@@ -6,7 +6,7 @@
   services.nginx = {
     enable = true;
     # Tell Nginx to serve the files from our "www" directory
-    virtualHosts.localhost.locations."/".root = ./www;
+    virtualHosts."_".locations."/".root = ./www;
   };
 
   # Open port 80 (HTTP) in the server's firewall
