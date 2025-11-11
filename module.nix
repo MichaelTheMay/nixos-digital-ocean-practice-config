@@ -1,10 +1,18 @@
 # module.nix
-{ config, pkgs, lib, modulesPath, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  imports = [
-    (modulesPath + "/virtualisation/digital-ocean-config.nix")
-  ];
+  # Boot loader configuration for DigitalOcean
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/vda";
+  };
+
+  # Root filesystem configuration
+  fileSystems."/" = {
+    device = "/dev/vda1";
+    fsType = "ext4";
+  };
 
   # Enable the Nginx web server
   services.nginx = {
@@ -15,6 +23,9 @@
 
   # Open port 80 (HTTP) in the server's firewall
   networking.firewall.allowedTCPPorts = [ 80 ];
+
+  # Ensure SSH is enabled
+  services.openssh.enable = true;
 
   # Set the system state version. This is important for
   # managing upgrades. We'll use 23.11, a recent stable version.
